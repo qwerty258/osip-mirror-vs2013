@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\osipparser2\osip_accept.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_accept_encoding.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_accept_language.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_alert_info.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_allow.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_authentication_info.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_authorization.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_body.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_call_id.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_call_info.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_contact.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_content_disposition.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_content_encoding.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_content_length.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_content_type.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_cseq.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_error_info.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_from.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_header.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_list.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_md5c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_message.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_message_parse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_message_to_str.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_mime_version.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_parser_cfg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_port.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_proxy_authenticate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_proxy_authentication_info.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_proxy_authorization.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_record_route.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_route.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_to.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_uri.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_via.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\osip_www_authenticate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\sdp_accessor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osipparser2\sdp_message.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\osipparser2\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_accept.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_accept_encoding.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_accept_language.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_alert_info.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_allow.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_authentication_info.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_authorization.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_call_id.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_call_info.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_contact.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_content_disposition.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_content_encoding.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_content_length.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_content_type.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_cseq.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_error_info.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_from.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_header.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_mime_version.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_proxy_authenticate.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_proxy_authentication_info.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_proxy_authorization.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_record_route.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_route.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_to.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_via.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\headers\osip_www_authenticate.h">
+      <Filter>Header Files\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_const.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_headers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_md5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_port.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\osip_uri.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osipparser2\sdp_message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\osipparser2\parser.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1c9a5643-0615-43de-b643-8069656bd485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{b34dd0a3-4cf9-4a00-ba6e-ff9606ec7b73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{fc7d0af6-6741-4a7d-9756-76b05ba7e66b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\headers">
+      <UniqueIdentifier>{86c0e8b7-4a01-4746-9720-84503d9c6be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src">
+      <UniqueIdentifier>{ed416a60-40e3-445d-9f48-d58bb423647d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="osipparser2.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -25,24 +25,24 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -78,7 +78,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\osip\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ENABLE_TRACE;SYSTEM_LOGGER_ENABLED;_CRT_SECURE_NO_DEPRECATE;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -92,11 +92,16 @@
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(PlatformToolset)\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>osipparser2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\osip2.def</ModuleDefinitionFile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\osip\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ENABLE_TRACE;SYSTEM_LOGGER_ENABLED;_CRT_SECURE_NO_DEPRECATE;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -109,10 +114,15 @@
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
+    <Link>
+      <AdditionalDependencies>osipparser2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(PlatformToolset)\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\osip2.def</ModuleDefinitionFile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\osip\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ENABLE_TRACE;SYSTEM_LOGGER_ENABLED;_CRT_SECURE_NO_DEPRECATE;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
@@ -125,10 +135,15 @@
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(PlatformToolset)\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>osipparser2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\osip2.def</ModuleDefinitionFile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\osip\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ENABLE_TRACE;SYSTEM_LOGGER_ENABLED;_CRT_SECURE_NO_DEPRECATE;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
@@ -141,42 +156,51 @@
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
+    <Link>
+      <AdditionalDependencies>osipparser2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(PlatformToolset)\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\osip2.def</ModuleDefinitionFile>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\osip\src\osip2\fsm_misc.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\ict.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\ict_fsm.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\ist.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\ist_fsm.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\nict.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\nict_fsm.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\nist.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\nist_fsm.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\osip.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\osip_dialog.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\osip_event.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\osip_time.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\osip_transaction.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\port_condv.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\port_fifo.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\port_sema.c" />
-    <ClCompile Include="..\..\..\osip\src\osip2\port_thread.c" />
+    <ClCompile Include="..\..\src\osip2\fsm_misc.c" />
+    <ClCompile Include="..\..\src\osip2\ict.c" />
+    <ClCompile Include="..\..\src\osip2\ict_fsm.c" />
+    <ClCompile Include="..\..\src\osip2\ist.c" />
+    <ClCompile Include="..\..\src\osip2\ist_fsm.c" />
+    <ClCompile Include="..\..\src\osip2\nict.c" />
+    <ClCompile Include="..\..\src\osip2\nict_fsm.c" />
+    <ClCompile Include="..\..\src\osip2\nist.c" />
+    <ClCompile Include="..\..\src\osip2\nist_fsm.c" />
+    <ClCompile Include="..\..\src\osip2\osip.c" />
+    <ClCompile Include="..\..\src\osip2\osip_dialog.c" />
+    <ClCompile Include="..\..\src\osip2\osip_event.c" />
+    <ClCompile Include="..\..\src\osip2\osip_time.c" />
+    <ClCompile Include="..\..\src\osip2\osip_transaction.c" />
+    <ClCompile Include="..\..\src\osip2\port_condv.c" />
+    <ClCompile Include="..\..\src\osip2\port_fifo.c" />
+    <ClCompile Include="..\..\src\osip2\port_sema.c" />
+    <ClCompile Include="..\..\src\osip2\port_thread.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\osip\src\osip2\fsm.h" />
-    <ClInclude Include="..\..\..\osip\include\osip2\internal.h" />
-    <ClInclude Include="..\..\..\osip\include\osip2\osip.h" />
-    <ClInclude Include="..\..\..\osip\include\osip2\osip_condv.h" />
-    <ClInclude Include="..\..\..\osip\include\osip2\osip_dialog.h" />
-    <ClInclude Include="..\..\..\osip\include\osip2\osip_fifo.h" />
-    <ClInclude Include="..\..\..\osip\include\osip2\osip_mt.h" />
-    <ClInclude Include="..\..\..\osip\src\osip2\xixt.h" />
+    <ClInclude Include="..\..\include\osip2\internal.h" />
+    <ClInclude Include="..\..\include\osip2\osip.h" />
+    <ClInclude Include="..\..\include\osip2\osip_condv.h" />
+    <ClInclude Include="..\..\include\osip2\osip_dialog.h" />
+    <ClInclude Include="..\..\include\osip2\osip_fifo.h" />
+    <ClInclude Include="..\..\include\osip2\osip_mt.h" />
+    <ClInclude Include="..\..\include\osip2\osip_time.h" />
+    <ClInclude Include="..\..\src\osip2\fsm.h" />
+    <ClInclude Include="..\..\src\osip2\xixt.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\osip\platform\vsnet\osipparser2.vcxproj">
       <Project>{44f46b7e-0e51-4304-9735-330dfbab41e5}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="osip2.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

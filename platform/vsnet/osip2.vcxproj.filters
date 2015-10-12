@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\osip2\fsm_misc.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\ict.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\ict_fsm.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\ist.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\ist_fsm.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\nict.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\nict_fsm.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\nist.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\nist_fsm.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\osip.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\osip_dialog.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\osip_event.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\osip_time.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\osip_transaction.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\port_condv.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\port_fifo.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\port_sema.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osip2\port_thread.c">
+      <Filter>Sourec Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\osip2\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osip2\osip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osip2\osip_condv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osip2\osip_dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osip2\osip_fifo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osip2\osip_mt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\osip2\osip_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\osip2\fsm.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\osip2\xixt.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{537d6586-9107-4f4b-91f1-596755519005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sourec Files">
+      <UniqueIdentifier>{ff2871d5-23de-49b2-99fe-71a602a1f2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{2083db18-1686-4ba8-8e62-2fa9642a6f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\src">
+      <UniqueIdentifier>{00bd553a-884d-40a4-a872-5a94f53d0a9a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="osip2.def">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
