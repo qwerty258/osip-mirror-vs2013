@@ -429,3 +429,11 @@ osip_trace_enable_level
 osip_trace_disable_level
 osip_is_trace_level_activate
 osip_trace
+
+next_separator
+__osip_uri_escape_nonascii_and_nondef
+__osip_uri_escape_userinfo
+__osip_uri_escape_password
+__osip_uri_escape_uri_param
+__osip_uri_escape_header_param
+__osip_uri_unescape

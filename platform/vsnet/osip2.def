@@ -99,3 +99,9 @@ osip_cond_destroy
 osip_cond_signal
 osip_cond_wait
 osip_cond_timedwait
+
+osip_gettimeofday
+osip_getsystemtime
+osip_compensatetime
+add_gettimeofday
+min_timercmp
