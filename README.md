@@ -1,4 +1,4 @@
-       Description:  {#mainpage}
+       Description:
        ===========
 
  The GNU oSIP library is an implementation of SIP - rfc3261.
