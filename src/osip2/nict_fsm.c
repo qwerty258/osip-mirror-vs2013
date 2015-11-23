@@ -141,12 +141,12 @@ nict_snd_request (osip_transaction_t * nict, osip_event_t * evt)
        stop timer E in reliable transport - non blocking socket: 
        the message was just sent
      */
-    {
+    if (i == 0) {               /* but message was really sent */
       osip_via_t *via;
       char *proto;
-      int k;
-      k = osip_message_get_via (nict->orig_request, 0, &via);   /* get top via */
-      if (k < 0) {
+
+      i = osip_message_get_via (nict->orig_request, 0, &via);   /* get top via */
+      if (i < 0) {
         nict_handle_transport_error (nict, -1);
         return;
       }
@@ -155,19 +155,11 @@ nict_snd_request (osip_transaction_t * nict, osip_event_t * evt)
         nict_handle_transport_error (nict, -1);
         return;
       }
-      if (i == 0) {               /* but message was really sent */
-        if (osip_strcasecmp (proto, "TCP") != 0 && osip_strcasecmp (proto, "TLS") != 0 && osip_strcasecmp (proto, "SCTP") != 0) {
-        }
-        else {                    /* reliable protocol is used: */
-          nict->nict_context->timer_e_length = -1;        /* E is not ACTIVE */
-          nict->nict_context->timer_e_start.tv_sec = -1;
-        }
-      } else {
-        if (osip_strcasecmp (proto, "TCP") != 0 && osip_strcasecmp (proto, "TLS") != 0 && osip_strcasecmp (proto, "SCTP") != 0) {
-        }
-        else {                    /* reliable protocol is used: */
-          nict->nict_context->timer_e_length = DEFAULT_T1_TCP_PROGRESS;
-        }
+      if (osip_strcasecmp (proto, "TCP") != 0 && osip_strcasecmp (proto, "TLS") != 0 && osip_strcasecmp (proto, "SCTP") != 0) {
+      }
+      else {                    /* reliable protocol is used: */
+        nict->nict_context->timer_e_length = -1;        /* E is not ACTIVE */
+        nict->nict_context->timer_e_start.tv_sec = -1;
       }
     }
 #endif
@@ -190,10 +182,7 @@ osip_nict_timeout_e_event (osip_transaction_t * nict, osip_event_t * evt)
 
   /* reset timer */
   if (nict->state == NICT_TRYING) {
-    if (nict->nict_context->timer_e_length < DEFAULT_T1)
-      nict->nict_context->timer_e_length = nict->nict_context->timer_e_length + DEFAULT_T1_TCP_PROGRESS;
-    else
-      nict->nict_context->timer_e_length = nict->nict_context->timer_e_length * 2;
+    nict->nict_context->timer_e_length = nict->nict_context->timer_e_length * 2;
     if (nict->nict_context->timer_e_length > DEFAULT_T2)
       nict->nict_context->timer_e_length = DEFAULT_T2;
   }
@@ -270,14 +259,6 @@ nict_rcv_1xx (osip_transaction_t * nict, osip_event_t * evt)
     osip_message_free (nict->last_response);
   }
   nict->last_response = evt->sip;
-
-  /* for unreliable transport increase the retransmission timeout */
-  if (nict->nict_context->timer_e_length > 0) {
-    nict->nict_context->timer_e_length = DEFAULT_T2;
-    osip_gettimeofday (&nict->nict_context->timer_e_start, NULL);
-    add_gettimeofday (&nict->nict_context->timer_e_start, nict->nict_context->timer_e_length);
-  }
-
   __osip_message_callback (OSIP_NICT_STATUS_1XX_RECEIVED, nict, evt->sip);
   __osip_transaction_set_state (nict, NICT_PROCEEDING);
 }

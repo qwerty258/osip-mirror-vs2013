@@ -329,26 +329,6 @@ ict_create_ack (osip_transaction_t * ict, osip_message_t * response)
     }
   }
 
-  if (response->status_code!=401 && response->status_code!=407) {
-    /* ack MUST contains the Authorization headers field from the original request */
-    if (osip_list_size (&ict->orig_request->authorizations) > 0) {
-      i = osip_list_clone (&ict->orig_request->authorizations, &ack->authorizations, (int (*)(void *, void **)) &osip_authorization_clone);
-      if (i != 0) {
-        osip_message_free (ack);
-        return NULL;
-      }
-    }
-
-    /* ack MUST contains the Proxy-Authorization headers field from the original request */
-    if (osip_list_size (&ict->orig_request->proxy_authorizations) > 0) {
-      i = osip_list_clone (&ict->orig_request->proxy_authorizations, &ack->proxy_authorizations, (int (*)(void *, void **)) &osip_proxy_authorization_clone);
-      if (i != 0) {
-        osip_message_free (ack);
-        return NULL;
-      }
-    }
-  }
-
   /* may be we could add some other headers: */
   /* For example "Max-Forward" */
 
@@ -406,23 +386,14 @@ ict_rcv_3456xx (osip_transaction_t * ict, osip_event_t * evt)
 
         /* search for maddr parameter */
         osip_uri_param_t *maddr_param = NULL;
-        osip_uri_param_t *obr_param = NULL;
-        osip_uri_param_t *obp_param = NULL;
 
         port = 5060;
         if (ack->req_uri->port != NULL)
           port = osip_atoi (ack->req_uri->port);
 
-        /* if ob was used in Contact, then exosip adds "x-obr" and "x-obp", thus, when
-        processing request, the ip/port destination are re-used here */
-        osip_uri_uparam_get_byname(ack->req_uri, "x-obr", &obr_param);
-        osip_uri_uparam_get_byname(ack->req_uri, "x-obp", &obp_param);
-
         osip_uri_uparam_get_byname (ack->req_uri, "maddr", &maddr_param);
         if (maddr_param != NULL && maddr_param->gvalue != NULL)
           osip_ict_set_destination (ict->ict_context, osip_strdup (maddr_param->gvalue), port);
-        else if (obr_param != NULL && obr_param->gvalue != NULL && obp_param != NULL && obp_param->gvalue != NULL)
-          osip_ict_set_destination (ict->ict_context, osip_strdup (obr_param->gvalue), osip_atoi(obp_param->gvalue));
         else
           osip_ict_set_destination (ict->ict_context, osip_strdup (ack->req_uri->host), port);
       }
@@ -441,7 +412,7 @@ ict_rcv_3456xx (osip_transaction_t * ict, osip_event_t * evt)
     else
       __osip_message_callback (OSIP_ICT_STATUS_6XX_RECEIVED, ict, evt->sip);
 
-    __osip_message_callback (OSIP_ICT_ACK_SENT, ict, ack);
+    __osip_message_callback (OSIP_ICT_ACK_SENT, ict, evt->sip);
   }
 
   /* start timer D (length is set to MAX (64*DEFAULT_T1 or 32000) */
