@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -404,7 +404,7 @@ extern "C" {
 
 #ifndef DOXYGEN
 /* internal method */
-  const char *next_separator (const char *ch, int separator_osip_to_find, int before_separator);
+  char *next_separator (const char *ch, int separator_osip_to_find, int before_separator);
 
   char *__osip_uri_escape_nonascii_and_nondef (const char *string, const char *def);
   char *__osip_uri_escape_userinfo (const char *string);

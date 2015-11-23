@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -53,9 +53,6 @@
     char *stale;		/**< stale (optional) */
     char *algorithm;		/**< algorythm (optional) */
     char *qop_options;		/**< qop option (optional)  */
-    char *version;		/**< version (optional - NTLM) */
-    char *targetname;		/**< targetname (optional - NTLM) */
-    char *gssapi_data;		/**< gssapi-data (optional - NTLM) */
     char *auth_param;		/**< other parameters (optional) */
   };
 
@@ -200,42 +197,6 @@ extern "C"
  * @param value The value of the new parameter.
  */
   void osip_www_authenticate_set_qop_options (osip_www_authenticate_t * header,
-					char *value);
-/**
- * Get value of the version parameter from a Www-Authenticate element.
- * @param header The element to work on.
- */
-  char *osip_www_authenticate_get_version (osip_www_authenticate_t * header);
-/**
- * Add the version parameter from a Www-Authenticate element.
- * @param header The element to work on.
- * @param value The value of the new parameter.
- */
-  void osip_www_authenticate_set_version (osip_www_authenticate_t * header,
-					char *value);
-/**
- * Get value of the targetname parameter from a Www-Authenticate element.
- * @param header The element to work on.
- */
-  char *osip_www_authenticate_get_targetname (osip_www_authenticate_t * header);
-/**
- * Add the targetname parameter from a Www-Authenticate element.
- * @param header The element to work on.
- * @param value The value of the new parameter.
- */
-  void osip_www_authenticate_set_targetname (osip_www_authenticate_t * header,
-					char *value);
-/**
- * Get value of the gssapi_data parameter from a Www-Authenticate element.
- * @param header The element to work on.
- */
-  char *osip_www_authenticate_get_gssapi_data (osip_www_authenticate_t * header);
-/**
- * Add the gssapi_data parameter from a Www-Authenticate element.
- * @param header The element to work on.
- * @param value The value of the new parameter.
- */
-  void osip_www_authenticate_set_gssapi_data (osip_www_authenticate_t * header,
 					char *value);
 
 #ifdef __cplusplus

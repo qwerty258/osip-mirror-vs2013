@@ -173,22 +173,11 @@ extern "C" {
  */
 #define DEFAULT_T1 500          /* 500 ms */
 #endif
-#ifndef DEFAULT_T1_TCP_PROGRESS
-  /**
-   * You can re-define the default value for T1_TCP_PROGRESS.
-   * This is a trick to use non blocking socke for reliable protocol
-   * On first attempt, the connection is not ready and the next
-   * osip retransmission are used to check the progress of the connection
-   * in order to send the message.
-   * The default value is 50ms.
-   */
-#define DEFAULT_T1_TCP_PROGRESS 50         /* 50ms */
-#endif
 #ifndef DEFAULT_T2
-  /**
-   * You can re-define the default value for T2. (T2 is defined in rfcxxxx)
-   * The default value is 4000ms.
-   */
+/**
+ * You can re-define the default value for T2. (T2 is defined in rfcxxxx)
+ * The default value is 4000ms.
+ */
 #define DEFAULT_T2 4000         /* 4s */
 #endif
 #ifndef DEFAULT_T4
@@ -295,7 +284,6 @@ extern "C" {
     int rweight;                     /**< rweight  */
     int port;                        /**< port  */
     char ipaddress[512];             /**< ipaddress result  */
-    struct timeval srv_is_broken;    /**< time when we considered SRV entry broken */
   };
 
 #define OSIP_SRV_STATE_UNKNOWN 0         /**< unknown */

@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -187,7 +187,7 @@ extern "C" {
   int osip_clrspace (char *word);
   int __osip_set_next_token (char **dest, char *buf, int end_separator, char **next);
   /* find the next unescaped quote and return its index. */
-  const char *__osip_quote_find (const char *qstring);
+  char *__osip_quote_find (const char *qstring);
   char *osip_enquote (const char *s);
   void osip_dequote (char *s);
 
