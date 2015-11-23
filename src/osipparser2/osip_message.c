@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -482,7 +482,6 @@ osip_message_clone (const osip_message_t * sip, osip_message_t ** dest)
     return OSIP_NOMEM;
   }
   copy->message_property = sip->message_property;
-  copy->application_data = sip->application_data;
 
   *dest = copy;
   return OSIP_SUCCESS;

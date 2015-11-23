@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -65,11 +65,11 @@ osip_uri_init (osip_uri_t ** url)
 /* this method search for the separator and   */
 /* return it only if it is located before the */
 /* second separator. */
-const char *
+char *
 next_separator (const char *ch, int separator_osip_to_find, int before_separator)
 {
-  const char *ind;
-  const char *tmp;
+  char *ind;
+  char *tmp;
 
   ind = strchr (ch, separator_osip_to_find);
   if (ind == NULL)
@@ -97,9 +97,9 @@ next_separator (const char *ch, int separator_osip_to_find, int before_separator
 int
 osip_uri_parse (osip_uri_t * url, const char *buf)
 {
-  const char *username;
-  const char *password;
-  const char *host;
+  char *username;
+  char *password;
+  char *host;
   const char *port;
   const char *params;
   const char *headers;
@@ -339,14 +339,14 @@ int
 osip_uri_parse_headers (osip_uri_t * url, const char *headers)
 {
   int i;
-  const char *_and;
-  const char *equal;
+  char *and;
+  char *equal;
 
   /* find '=' wich is the separator for one header */
   /* find ';' wich is the separator for multiple headers */
 
   equal = strchr (headers, '=');
-  _and = strchr (headers + 1, '&');
+  and = strchr (headers + 1, '&');
 
   if (equal == NULL)            /* each header MUST have a value */
     return OSIP_SYNTAXERROR;
@@ -361,20 +361,20 @@ osip_uri_parse_headers (osip_uri_t * url, const char *headers)
     osip_strncpy (hname, headers + 1, equal - headers - 1);
     __osip_uri_unescape (hname);
 
-    if (_and != NULL) {
-      if (_and - equal < 2) {
+    if (and != NULL) {
+      if (and - equal < 2) {
         osip_free (hname);
         return OSIP_SYNTAXERROR;
       }
-      hvalue = (char *) osip_malloc (_and - equal);
+      hvalue = (char *) osip_malloc (and - equal);
       if (hvalue == NULL) {
         osip_free (hname);
         return OSIP_NOMEM;
       }
-      osip_strncpy (hvalue, equal + 1, _and - equal - 1);
+      osip_strncpy (hvalue, equal + 1, and - equal - 1);
       __osip_uri_unescape (hvalue);
     }
-    else {                      /* this is for the last header (no _and...) */
+    else {                      /* this is for the last header (no and...) */
       if (headers + strlen (headers) - equal + 1 < 2) {
         osip_free (hname);
         return OSIP_SYNTAXERROR;
@@ -395,13 +395,13 @@ osip_uri_parse_headers (osip_uri_t * url, const char *headers)
       return i;
     }
 
-    if (_and == NULL)            /* we just set the last header */
+    if (and == NULL)            /* we just set the last header */
       equal = NULL;
     else {                      /* continue on next header */
 
-      headers = _and;
+      headers = and;
       equal = strchr (headers, '=');
-      _and = strchr (headers + 1, '&');
+      and = strchr (headers + 1, '&');
       if (equal == NULL)        /* each header MUST have a value */
         return OSIP_SYNTAXERROR;
     }
@@ -603,12 +603,6 @@ osip_uri_to_str (const osip_uri_t * url, char **dest)
       char *previous_buf;
 
       u_param = (osip_uri_param_t *) osip_list_get (&url->url_params, pos);
-
-      if (osip_strcasecmp(u_param->gname, "x-obr")==0 || osip_strcasecmp(u_param->gname, "x-obp")==0) {
-        /* x-obr and x-obp are internal params used by exosip: they must not appear in messages */
-        pos++;
-        continue;
-      }
 
       tmp1 = __osip_uri_escape_uri_param (u_param->gname);
       if (tmp1 == NULL) {

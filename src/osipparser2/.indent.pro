@@ -1,8 +1,0 @@
--kr
---use-tabs
---tab-size4
---cuddle-else
---line-length83
---comment-line-length80
--TPPL_DECLARE
--TPSP_PLUGIN_DECLARE

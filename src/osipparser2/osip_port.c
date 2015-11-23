@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -658,10 +658,10 @@ __osip_set_next_token_better (char **dest, char *buf, int end_separator, int *fo
 
 /* in quoted-string, many characters can be escaped...   */
 /* __osip_quote_find returns the next quote that is not escaped */
-const char *
+char *
 __osip_quote_find (const char *qstring)
 {
-  const char *quote;
+  char *quote;
 
   quote = strchr (qstring, '"');
   if (quote == qstring)         /* the first char matches and is not escaped... */
@@ -928,9 +928,6 @@ __osip_port_gettimeofday (struct timeval *tp, void *tz)
 #elif defined(__linux)
 #include <sys/time.h>
 #define __osip_port_gettimeofday gettimeofday
-#elif defined(__APPLE__)
-#include <sys/time.h>
-#define __osip_port_gettimeofday gettimeofday
 #endif
 
 #ifdef ANDROID
@@ -954,7 +951,7 @@ osip_trace (char *filename_long, int li, osip_trace_level_t level, FILE * f, cha
 
   char *fi = NULL;
 
-#if (defined(WIN32)  && !defined(_WIN32_WCE)) || defined(__linux) || defined(__APPLE__)
+#if (defined(WIN32)  && !defined(_WIN32_WCE)) || defined(__linux)
   static struct timeval start = { 0, 0 };
   struct timeval now;
 
@@ -963,7 +960,7 @@ osip_trace (char *filename_long, int li, osip_trace_level_t level, FILE * f, cha
   }
   __osip_port_gettimeofday (&now, NULL);
 
-  relative_time = (int)(1000 * (now.tv_sec - start.tv_sec));
+  relative_time = 1000 * (now.tv_sec - start.tv_sec);
   if (now.tv_usec - start.tv_usec > 0)
     relative_time = relative_time + ((now.tv_usec - start.tv_usec) / 1000);
   else

@@ -1,6 +1,6 @@
 /*
   The oSIP library implements the Session Initiation Protocol (SIP -rfc3261-)
-  Copyright (C) 2001-2015 Aymeric MOIZARD amoizard@antisip.com
+  Copyright (C) 2001-2012 Aymeric MOIZARD amoizard@antisip.com
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -426,11 +426,12 @@ int
 osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalue)
 {
   int i;
-  char *ptr, *p;                /* current location of the search */
+  char *ptr;                    /* current location of the search */
   char *comma;                  /* This is the separator we are elooking for */
   char *beg;                    /* beg of a header */
   char *end;                    /* end of a header */
-  int inquotes, inuri;          /* state for inside/outside of double-qoutes or URI */
+  char *quote1;                 /* first quote of a pair of quotes   */
+  char *quote2;                 /* second quuote of a pair of quotes */
   size_t hname_len;
 
   /* Find header based upon lowercase comparison */
@@ -449,14 +450,10 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
   hname_len = strlen (hname);
 
   if (comma == NULL || (hname_len == 4 && strncmp (hname, "date", 4) == 0)
-      || (hname_len == 1 && strncmp (hname, "t", 1) == 0)
       || (hname_len == 2 && strncmp (hname, "to", 2) == 0)
-      || (hname_len == 1 && strncmp (hname, "f", 1) == 0)
       || (hname_len == 4 && strncmp (hname, "from", 4) == 0)
-      || (hname_len == 1 && strncmp (hname, "i", 1) == 0)
       || (hname_len == 7 && strncmp (hname, "call-id", 7) == 0)
       || (hname_len == 4 && strncmp (hname, "cseq", 4) == 0)
-      || (hname_len == 1 && strncmp (hname, "s", 1) == 0)
       || (hname_len == 7 && strncmp (hname, "subject", 7) == 0)
       || (hname_len == 7 && strncmp (hname, "expires", 7) == 0)
       || (hname_len == 6 && strncmp (hname, "server", 6) == 0)
@@ -467,11 +464,7 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
       || (hname_len == 19 && strncmp (hname, "proxy-authorization", 19) == 0)
       || (hname_len == 25 && strncmp (hname, "proxy-authentication-info", 25) == 0)
       || (hname_len == 12 && strncmp (hname, "organization", 12) == 0)
-      || (hname_len == 13 && strncmp (hname, "authorization", 13) == 0)
-      || (hname_len == 1 && strncmp (hname, "r", 1) == 0) /* refer-to */
-      || (hname_len == 8 && strncmp (hname, "refer-to", 8) == 0)
-      || (hname_len == 1 && strncmp (hname, "b", 1) == 0) /* referred-by */
-      || (hname_len == 11 && strncmp (hname, "referred-by", 11) == 0))
+      || (hname_len == 13 && strncmp (hname, "authorization", 13) == 0))
     /* there is no multiple header! likely      */
     /* to happen most of the time...            */
     /* or hname is a TEXT-UTF8-TRIM and may     */
@@ -485,88 +478,115 @@ osip_message_set_multiple_header (osip_message_t * sip, char *hname, char *hvalu
   }
 
   beg = hvalue;
-  inquotes = 0;
-  inuri = 0;
-  /* Seach for a comma that is not within quotes or a URI */
-  for (;; ptr++)
-  {
-    switch (*ptr)
-    {
-    case '"':
-      /* Check that the '"' is not escaped */
-      for (i = 0, p = ptr; p >= beg && *p == '\\'; p--, i++);
-      if (i % 2 == 0)
-        inquotes = !inquotes; /* the '"' was not escaped */
-      break;
+  end = NULL;
+  quote2 = NULL;
+  while (comma != NULL) {
+    quote1 = __osip_quote_find (ptr);
+    if (quote1 != NULL) {
+      quote2 = __osip_quote_find (quote1 + 1);
+      if (quote2 == NULL)
+        return OSIP_SYNTAXERROR;        /* quotes comes by pair */
+      ptr = quote2 + 1;
+    }
 
-    case '<':
-      if (!inquotes)
-      {
-        if (!inuri)
-        {
-          if((osip_strncasecmp(ptr+1, "sip:", 4) == 0
-              || osip_strncasecmp(ptr+1, "sips:", 5) == 0
-              || osip_strncasecmp(ptr+1, "http:", 5) == 0
-              || osip_strncasecmp(ptr+1, "https:", 6) == 0
-              || osip_strncasecmp(ptr+1, "tel:", 4) == 0)
-              && strchr(ptr, '>'))
-            inuri = 1;
+    if ((quote1 == NULL) || (quote1 > comma)) {
+      /* We must search for the next comma which is not
+         within quotes! */
+      end = comma;
+
+      if (quote1 != NULL && quote1 > comma) {
+        /* comma may be within the quotes */
+        /* ,<sip:usera@host.example.com>;methods=\"INVITE,BYE,OPTIONS,ACK,CANCEL\",<sip:userb@host.blah.com> */
+        /* we want the next comma after the quotes */
+        char *tmp_comma;
+        char *tmp_quote1;
+        char *tmp_quote2;
+
+        tmp_quote1 = quote1;
+        tmp_quote2 = quote2;
+        tmp_comma = strchr (comma + 1, ',');
+        while (1) {
+          if (tmp_comma < tmp_quote1)
+            break;              /* ok (before to quotes) */
+          if (tmp_comma < tmp_quote2) {
+            tmp_comma = strchr (tmp_quote2 + 1, ',');
+          }
+          tmp_quote1 = __osip_quote_find (tmp_quote2 + 1);
+          if (tmp_quote1 == NULL)
+            break;
+          tmp_quote2 = __osip_quote_find (tmp_quote1 + 1);
+          if (tmp_quote2 == NULL)
+            break;              /* probably a malformed message? */
         }
-	/*
-	  else {
-	  if we found such sequence: "<sip:" "<sip:" ">"
-	  It might be a valid header containing data and not URIs.
-	  Thus, we ignore inuri
-	  }
-	*/
+        comma = tmp_comma;      /* this one is not enclosed within quotes */
       }
-      break;
+      else
+        comma = strchr (comma + 1, ',');
+      if (comma != NULL)
+        ptr = comma + 1;
 
-    case '>':
-      if (!inquotes)
-      {
-        if (inuri)
-          inuri = 0;
-      }
-      break;
-
-    case '\0':
-      /* we discard any validation we tried: no valid uri detected */
-      inquotes=0;
-      inuri=0;
-    case ',':
-      if (!inquotes && !inuri)
-      {
-        char *avalue;
-
-        if (beg[0] == '\0')
-          return OSIP_SUCCESS; /* empty header */
-
-        end = ptr;
-        if (end - beg + 1 < 2)
-	  {
-	    beg=end+1;
-	    break; /* skip empty header */
-	  }
-        avalue = (char *) osip_malloc (end - beg + 1);
-        if (avalue==NULL)
-          return OSIP_NOMEM;
-        osip_clrncpy (avalue, beg, end - beg);
-        /* really store the header in the sip structure */
-        i = osip_message_set__header (sip, hname, avalue);
-        osip_free (avalue);
+    }
+    else if ((quote1 < comma) && (quote2 < comma)) {    /* quotes are located before the comma, */
+      /* continue the search for next quotes  */
+      ptr = quote2 + 1;
+    }
+    else if ((quote1 < comma) && (comma < quote2)) {    /* if comma is inside the quotes... */
+      /* continue with the next comma.    */
+      ptr = quote2 + 1;
+      comma = strchr (ptr, ',');
+      if (comma == NULL)
+        /* this header last at the end of the line! */
+      {                         /* this one does not need an allocation... */
+#if 0
+        if (strlen (beg) < 2)
+          return OSIP_SUCCESS;  /* empty header */
+#else
+        if (beg[0] == '\0' || beg[1] == '\0')
+          return OSIP_SUCCESS;  /* empty header */
+#endif
+        osip_clrspace (beg);
+        i = osip_message_set__header (sip, hname, beg);
         if (i != 0)
           return i;
-        beg = end + 1;
-      }
-      if (*ptr == '\0')
         return OSIP_SUCCESS;
-      break;
+      }
+    }
 
-    default:
-      break;
+    if (end != NULL) {
+      char *avalue;
+
+      if (end - beg + 1 < 2)
+        return OSIP_SYNTAXERROR;
+      avalue = (char *) osip_malloc (end - beg + 1);
+      if (avalue == NULL)
+        return OSIP_NOMEM;
+      osip_clrncpy (avalue, beg, end - beg);
+      /* really store the header in the sip structure */
+      i = osip_message_set__header (sip, hname, avalue);
+      osip_free (avalue);
+      if (i != 0)
+        return i;
+      beg = end + 1;
+      end = NULL;
+      if (comma == NULL)
+        /* this header last at the end of the line! */
+      {                         /* this one does not need an allocation... */
+#if 0
+        if (strlen (beg) < 2)
+          return OSIP_SUCCESS;  /* empty header */
+#else
+        if (beg[0] == '\0' || beg[1] == '\0')
+          return OSIP_SUCCESS;  /* empty header */
+#endif
+        osip_clrspace (beg);
+        i = osip_message_set__header (sip, hname, beg);
+        if (i != 0)
+          return i;
+        return OSIP_SUCCESS;
+      }
     }
   }
+  return OSIP_SYNTAXERROR;      /* if comma is NULL, we should have already return 0 */
 }
 
 /* set all headers */
@@ -706,11 +726,19 @@ msg_osip_body_parse (osip_message_t * sip, const char *start_of_buf, const char 
     else {
       /* if content_length does not exist, set it. */
       char tmp[16];
-      osip_body_len = length;
-      sprintf (tmp, "%i", (int) osip_body_len);
-      i = osip_message_set_content_length (sip, tmp);
-      if (i != 0)
-	return i;
+
+      /* case where content-length is missing but the
+         body only contains non-binary data */
+      if (0 == osip_strcasecmp (sip->content_type->type, "application")
+          && 0 == osip_strcasecmp (sip->content_type->subtype, "sdp")) {
+        osip_body_len = strlen (start_of_body);
+        sprintf (tmp, "%i", (int) osip_body_len);
+        i = osip_message_set_content_length (sip, tmp);
+        if (i != 0)
+          return i;
+      }
+      else
+        return OSIP_SYNTAXERROR;        /* Content-type may be non binary data */
     }
 
     if (length < osip_body_len) {
@@ -858,19 +886,9 @@ _osip_message_parse (osip_message_t * sip, const char *buf, size_t length, int s
   }
   tmp = (char *) next_header_index;
 
-  if (sip->content_length != NULL && sip->content_length->value == NULL) {
-    /* empty content_length header */
-    osip_content_length_free(sip->content_length);
-    sip->content_length=NULL;
-  }
-
-  if (sip->content_length != NULL && sip->content_length->value != NULL && atoi(sip->content_length->value) >0) {
-    /* body exist */
-  } else if (sip->content_length == NULL && '\r' == next_header_index[0] && '\n' == next_header_index[1] && length - (tmp - beg) - (2) >0) {
-    /* body exist */
-  } else if (sip->content_length == NULL && '\n' == next_header_index[0] && length - (tmp - beg) - (1) >0) {
-    /* body exist */
-  } else {
+  /* this is a *very* simple test... (which handle most cases...) */
+  if (tmp[0] == '\0' || tmp[1] == '\0' || tmp[2] == '\0') {
+    /* this is mantory in the oSIP stack */
     if (sip->content_length == NULL)
       osip_message_set_content_length (sip, "0");
     osip_free (beg);
@@ -986,43 +1004,39 @@ osip_message_get_reason (int replycode)
     {411, "Length Required"},
     {412, "Conditional Request Failed"},
     {413, "Request Entity Too Large"},
-    {414, "Request-URI Too Long"},
+    {414, "Request-URI Too Large"},
     {415, "Unsupported Media Type"},
-    {416, "Unsupported URI Scheme"},
-    {417, "Unknown Resource-Priority"},
+    {416, "Unsupported Uri Scheme"},
     {420, "Bad Extension"},
     {421, "Extension Required"},
     {422, "Session Interval Too Small"},
-    {423, "Interval Too Brief"},
-    {469, "Bad Info Package"},
-    {480, "Temporarily Unavailable"},
-    {481, "Call/Transaction Does Not Exist"},
+    {423, "Interval Too Short"},
+    {480, "Temporarily not available"},
+    {481, "Call Leg/Transaction Does Not Exist"},
     {482, "Loop Detected"},
     {483, "Too Many Hops"},
     {484, "Address Incomplete"},
     {485, "Ambiguous"},
     {486, "Busy Here"},
-    {487, "Request Terminated"},
+    {487, "Request Cancelled"},
     {488, "Not Acceptable Here"},
     {489, "Bad Event"},
     {491, "Request Pending"},
     {493, "Undecipherable"},
   };
   static const struct code_to_reason reasons5xx[] = {
-    {500, "Server Internal Error"},
+    {500, "Internal Server Error"},
     {501, "Not Implemented"},
     {502, "Bad Gateway"},
     {503, "Service Unavailable"},
-    {504, "Server Time-out"},
-    {505, "Version Not Supported"},
-    {513, "Message Too Large"},
+    {504, "Gateway Time-out"},
+    {505, "SIP Version not supported"},
   };
   static const struct code_to_reason reasons6xx[] = {
     {600, "Busy Everywhere"},
     {603, "Decline"},
-    {604, "Does Not Exist Anywhere"},
-    {606, "Not Acceptable"},
-    {687, "Dialog Terminated"}
+    {604, "Does not exist anywhere"},
+    {606, "Not Acceptable"}
   };
   const struct code_to_reason *reasons;
   int len, i;
